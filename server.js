@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const db = require('./db');
 const bodyParser = require('body-parser');
+const dns=require('dns');
+require('dotenv').config();
+
+const PORT=process.env.PORT ||3000;
+
+dns.setServers(["1.1.1.1","8.8.8.8"]);
 
 app.use(bodyParser.json());
 
@@ -14,6 +20,6 @@ app.use('/', menuroute);
 const inventoryroute = require('./routes/inventoryroute');
 app.use('/', inventoryroute);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('Server is running on http://localhost:3000');
 });
