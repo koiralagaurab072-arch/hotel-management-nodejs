@@ -1,34 +1,42 @@
 
 const mongoose = require('mongoose');
 
-const personschema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const personschema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
     },
-    age:{
-        type:Number,
-        required:true,
-        min:18,
-        max:60
+    age: {
+        type: Number,
+        required: true,
+        min: 18,
+        max: 60
     },
-    address:{
-        type:String,
-        required:true
+    address: {
+        type: String,
+        required: true
     },
-    work:{
-        type:String,
-        enum:['chef','waiter','manager'],
-        required:true
+    work: {
+        type: String,
+        enum: ['chef', 'waiter', 'manager'],
+        required: true
     },
-    email:{
-   type:String,
-   required:true,
-   unique:true
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    username: {
+        type: string,
+        required: true
+    },
+    password: {
+        type: string,
+        required: true
     }
 
 })
 
 //create perosn model
-const person=mongoose.model('person',personschema);
-module.exports=person;
+const person = mongoose.model('person', personschema);
+module.exports = person;
