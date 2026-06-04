@@ -12,6 +12,9 @@ route.post('/person', async (req, res) => {
   }
   catch (err) {
     console.log("error occurred", err);
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({ error: err.message });
+    }
     res.status(500).json({ error: 'server error' }); // send error response
   }
 });
@@ -54,19 +57,36 @@ route.put('/person/:id', async (req, res) => {
       runValidators: true,//run mongoose validation
     })
     if (!response) {
-    return res.status(404).json({ error: 'Person not found' });
-  }
+      return res.status(404).json({ error: 'Person not found' });
+    }
     console.log('data has been updated');
     res.status(200).json(response);
   } catch (err) {
-    console.error('error has been seen',err);
+    console.error('error has been seen', err);
 
-    
-  if (err.name === 'ValidationError') {
-    return res.status(400).json({ error: err.message });
-  
-}
+
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({ error: err.message });
+
+    }
     res.status(500).json({ error: 'internal server error' });
+  }
+})
+
+//delete data
+route.delete('/person/:id', async (req, res) => {
+
+  try {
+    const id = req.params.id;
+    const response = await person.findByIdAndDelete(id);
+    if (!response) {
+      res.status(404).json({ message: 'person not forund' });
+    }
+    console.log(`person ${person.id} has been deleted`);
+    res.status(200).json(response);
+  }catch(err){
+    console.log('error occur while deleting',err);
+    res.status(500).json({error:"internal server error"});
   }
 })
 

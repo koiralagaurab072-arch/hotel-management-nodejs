@@ -12,7 +12,7 @@ route.post('/menu', async (req, res) => {
     }
     catch (err) {
         console.log('error has been seen');
-        res.status(500).json({ error: 'unexpected error has been seen ' })
+        res.status(500).json({ error: 'unexpected error has been seen '})
     }
 })
 route.get('/menu/:taste', async (req, res) => {
